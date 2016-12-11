@@ -335,7 +335,7 @@ namespace Html
          */
         public attr(attr, value = false)
         {
-            if (Array.isArray(attr)) {
+            if (typeof attr == "object") {
                 for (let key in attr) {
                     this.element.attr(key, attr[key]);
                 }
@@ -359,7 +359,7 @@ namespace Html
          * @return {[type]}     [description]
          */
         public css(css, value = false) {
-            if (Array.isArray(css)) {
+            if (typeof css == "object") {
                 for (let key in css) {
                     this.element.css(key, css[key]);
                 }
@@ -1335,18 +1335,25 @@ namespace Html
         {
 
             this.header = true;
-            this.thead = new Html.Thead("thead" + this.id);
-            this.tr = new Html.Tr("tr" + this.id);
+            this.thead  = new Html.Thead("thead" + this.id);
+            this.tr     = new Html.Tr("trHeader" + this.id);
 
             let i = 0;
             for (let key in columns) {
 
                 let th = new Html.Th("TheadTh" + key + this.id);
-                th.getElement().append(
-                    this.capitalize(columns[key])
-                );
 
-                this.thead.getElement().append(
+                if (typeof columns[key] == "object") {
+                    th.append(
+                        columns[key]
+                    );
+                } else {
+                    th.getElement().append(
+                        this.capitalize(columns[key])
+                    );
+                }
+
+                this.tr.getElement().append(
                     th.getElement()
                 );
 
@@ -1356,6 +1363,10 @@ namespace Html
 
                 i++;
             }
+
+            this.thead.getElement().append(
+                this.tr.getElement()
+            );
 
             this.getElement().append(
                 this.thead.getElement()

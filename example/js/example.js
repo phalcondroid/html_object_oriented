@@ -2,30 +2,25 @@ $(function () {
 	
 	var body = $("#body");
 
-	var div = new Html.Div("name");
-    
-    div.attr("style", "background-color : white");
-    div.class("custom-class");
-    div.css("color", "black");
+	var modal = new Bootstrap.Modal("SetId");
 
-    var pre = new Html.Pre();
-    pre.append([
-    	"other way",
-    	new Html.Br(),
-    	"to append elements"
-    ]);
+	modal.setHeader("<h1>Title</h1>"); //Add string
+	modal.setBody("content");
+	modal.setFooter("footer"); //Add html elements
+	modal.build();
 
+	var div = new Html.Div();
 	div.append(
-		pre
+		modal
 	);
 
-	body.append(
+	body.html(
 		div.getElement()
 	);
 
-	/*
-	console.log(div2.html());
+	modal.launch();
 
+	/*
 	//table creation
 	var table = new Html.Table();
 	table.class("table table-striped");
@@ -67,8 +62,8 @@ $(function () {
 	var modal = new Bootstrap.Modal("SetId");
 
 	modal.setHeader("<h1>Title</h1>"); //Add string
-	modal.setFooter(new Html.Div("Example")); //Add html elements
-	modal.setBody(table.clone());
+	modal.setFooter("kakakka"); //Add html elements
+	modal.setBody("jajja");
 	modal.build();
 
 	var div = new Html.Div();

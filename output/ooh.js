@@ -288,7 +288,7 @@ var Html;
          */
         HtmlElement.prototype.attr = function (attr, value) {
             if (value === void 0) { value = false; }
-            if (Array.isArray(attr)) {
+            if (typeof attr == "object") {
                 for (var key in attr) {
                     this.element.attr(key, attr[key]);
                 }
@@ -311,7 +311,7 @@ var Html;
          */
         HtmlElement.prototype.css = function (css, value) {
             if (value === void 0) { value = false; }
-            if (Array.isArray(css)) {
+            if (typeof css == "object") {
                 for (var key in css) {
                     this.element.css(key, css[key]);
                 }
@@ -1607,17 +1607,23 @@ var Html;
         Table.prototype.setHeader = function (columns) {
             this.header = true;
             this.thead = new Html.Thead("thead" + this.id);
-            this.tr = new Html.Tr("tr" + this.id);
+            this.tr = new Html.Tr("trHeader" + this.id);
             var i = 0;
             for (var key in columns) {
                 var th = new Html.Th("TheadTh" + key + this.id);
-                th.getElement().append(this.capitalize(columns[key]));
-                this.thead.getElement().append(th.getElement());
+                if (typeof columns[key] == "object") {
+                    th.append(columns[key]);
+                }
+                else {
+                    th.getElement().append(this.capitalize(columns[key]));
+                }
+                this.tr.getElement().append(th.getElement());
                 if (typeof this.fnCHeader === "function") {
                     this.fnCHeader(th, i, columns[key], key);
                 }
                 i++;
             }
+            this.thead.getElement().append(this.tr.getElement());
             this.getElement().append(this.thead.getElement());
             return this;
         };
@@ -2119,6 +2125,7 @@ var Bootstrap;
             this.body.class("modal-body");
             this.foot = new Html.Div();
             this.foot.class("modal-footer");
+            this.setCloseButton();
             return this;
         }
         /**

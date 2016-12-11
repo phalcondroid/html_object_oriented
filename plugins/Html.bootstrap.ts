@@ -144,12 +144,14 @@ namespace Bootstrap
         private header;
         private body;
         private foot;
+        private closeButton;
 
         /**
          *
          * @return 
          */
-        public constructor(name) {
+        public constructor(name)
+        {
 
             this.container = new Html.Div(name);
             this.container.attr({
@@ -178,6 +180,9 @@ namespace Bootstrap
 
             this.foot = new Html.Div();
             this.foot.class("modal-footer");
+
+            this.setCloseButton();
+
             return this;
         }
 
