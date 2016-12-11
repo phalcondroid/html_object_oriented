@@ -22,8 +22,9 @@ var Html;
          * @param  {string} name [description]
          * @return {[type]}      [description]
          */
-        function HtmlElement(name) {
+        function HtmlElement(name, newClone) {
             if (name === void 0) { name = ""; }
+            if (newClone === void 0) { newClone = false; }
             /**
              *
              */
@@ -34,14 +35,19 @@ var Html;
              */
             this.url = "";
             this.id = name;
-            this.element = this.init(this.getClassName(), name);
+            if (newClone) {
+                this.$ = $(newClone);
+            }
+            else {
+                this.$ = this.init(this.getClassName(), name);
+            }
             return this;
         }
         /**
          *
          */
         HtmlElement.prototype.create = function (tag) {
-            this.element = this.init(tag, this.id);
+            this.$ = this.init(tag, this.id);
             return this;
         };
         /**
@@ -78,7 +84,7 @@ var Html;
          * @return {[type]}       [description]
          */
         HtmlElement.prototype.class = function (attrClass) {
-            this.element.attr("class", attrClass);
+            this.$.attr("class", attrClass);
             return this;
         };
         /**
@@ -86,7 +92,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.addChild = function (element) {
-            this.element.append(element);
+            this.$.append(element);
             return this;
         };
         /**
@@ -95,7 +101,7 @@ var Html;
          * @return {[type]}      [description]
          */
         HtmlElement.prototype.click = function (fn) {
-            $(this.element).click(fn);
+            $(this.$).click(fn);
             return this;
         };
         /**
@@ -103,7 +109,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.change = function (fn) {
-            $(this.element).change(fn);
+            $(this.$).change(fn);
             return this;
         };
         /**
@@ -111,7 +117,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keypress = function (fn) {
-            $(this.element).keypress(fn);
+            $(this.$).keypress(fn);
             return this;
         };
         /**
@@ -119,7 +125,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keydown = function (fn) {
-            $(this.element).keydown(fn);
+            $(this.$).keydown(fn);
             return this;
         };
         /**
@@ -127,7 +133,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keyup = function (fn) {
-            $(this.element).keyup(fn);
+            $(this.$).keyup(fn);
             return this;
         };
         /**
@@ -135,7 +141,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.blur = function (fn) {
-            $(this.element).blur(fn);
+            $(this.$).blur(fn);
             return this;
         };
         /**
@@ -143,7 +149,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.focus = function (fn) {
-            $(this.element).focus(fn);
+            $(this.$).focus(fn);
             return this;
         };
         /**
@@ -155,81 +161,60 @@ var Html;
         HtmlElement.prototype.setEvent = function (event, fn, evenType) {
             if (evenType === void 0) { evenType = "click"; }
             // Delete created methods
-            $(this.element).unbind(event);
+            $(this.$).unbind(event);
             switch (event) {
                 case "click":
-                    $(this.element).click(fn);
+                    $(this.$).click(fn);
                     break;
                 case "change":
-                    $(this.element).change(fn);
+                    $(this.$).change(fn);
                     break;
                 case "keypress":
-                    $(this.element).keypress(fn);
+                    $(this.$).keypress(fn);
                     break;
                 case "keydown":
-                    $(this.element).keydown(fn);
+                    $(this.$).keydown(fn);
                     break;
                 case "keyup":
-                    $(this.element).keyup(fn);
+                    $(this.$).keyup(fn);
                     break;
                 case "blur":
-                    $(this.element).blur(fn);
+                    $(this.$).blur(fn);
                     break;
                 case "focus":
-                    $(this.element).focus(fn);
+                    $(this.$).focus(fn);
                     break;
             }
             return this;
+        };
+        HtmlElement.prototype.getJqueryElement = function (element) {
+            if (element instanceof Html.HtmlElement) {
+                return element.getElement();
+            }
+            else {
+                return element;
+            }
         };
         /**
          * [get description]
          * @return {[type]} [description]
          */
         HtmlElement.prototype.getElement = function () {
-            return this.element;
+            return this.$;
         };
         /**
-         * [append description]
-         * @param  {[type]} config [description]
-         * @return {[type]}        [description]
+         * Append elements
+         * @param value append
+         * @return this
          */
         HtmlElement.prototype.append = function (append) {
-            if (typeof append === "string") {
-                this.element.append(append);
+            if (typeof append == "string") {
+                this.$.append(this.getJqueryElement(append));
             }
-            else if (typeof append === "object" || typeof append === "array") {
+            else if (typeof append == "object") {
                 for (var key in append) {
-                    this.element.append(append[key]);
+                    this.$.append(this.getJqueryElement(append[key]));
                 }
-            }
-            return this;
-        };
-        /**
-         * [attr description]
-         * @param  {[type]} attr [description]
-         * @return {[type]}      [description]
-         */
-        HtmlElement.prototype.attr = function (attr, value) {
-            if (value === void 0) { value = false; }
-            if (typeof attr == "array") {
-                for (var key in attr) {
-                    this.element.attr(key, attr[key]);
-                }
-            }
-            else if (typeof attr == "string") {
-            }
-            else if (typeof attr == "string" && value) {
-            }
-            return this;
-        };
-        /**
-         * [css description]
-         * @param  {[type]} css [description]
-         * @return {[type]}     [description]
-         */
-        HtmlElement.prototype.css = function (css) {
-            for (var key in css) {
-                this.element.css(key, css[key]);
             }
             return this;
         };
@@ -241,12 +226,55 @@ var Html;
         HtmlElement.prototype.html = function (html) {
             if (html === void 0) { html = null; }
             if (html) {
-                this.element.html(html);
+                this.$.html(html);
                 return this;
             }
             else {
-                return this.element.html();
+                return this.$.html();
             }
+        };
+        HtmlElement.prototype.getHtml = function () {
+            return this.$.html();
+        };
+        /**
+         *
+         * @param attr
+         * @return
+         */
+        HtmlElement.prototype.attr = function (attr, value) {
+            if (value === void 0) { value = false; }
+            if (typeof attr == "object") {
+                for (var key in attr) {
+                    this.$.attr(key, attr[key]);
+                }
+            }
+            else if (typeof attr == "string" && value != false) {
+                this.$.attr(attr, value);
+            }
+            return this;
+        };
+        /**
+         *
+         */
+        HtmlElement.prototype.getAttr = function (attr) {
+            return this.$.attr(attr);
+        };
+        /**
+         * [css description]
+         * @param  {[type]} css [description]
+         * @return {[type]}     [description]
+         */
+        HtmlElement.prototype.css = function (css, value) {
+            if (value === void 0) { value = false; }
+            if (typeof css == "object") {
+                for (var key in css) {
+                    this.$.css(key, css[key]);
+                }
+            }
+            else if (typeof css == "string" && value != false) {
+                this.$.attr(css, value);
+            }
+            return this;
         };
         /**
          *
@@ -254,7 +282,7 @@ var Html;
          * @return {[type]}       [description]
          */
         HtmlElement.prototype.unbind = function (event) {
-            this.element.unbind(event);
+            this.$.unbind(event);
             return this;
         };
         /**
@@ -318,8 +346,9 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.clone = function (newIdentify) {
-            var newElement = this.element.clone();
-            return this.init(newElement, newIdentify);
+            if (newIdentify === void 0) { newIdentify = ""; }
+            var newElement = this.$.clone();
+            return new HtmlElement(newIdentify, newElement[0]);
         };
         /**
          * [ajax description]
@@ -343,11 +372,11 @@ var Html;
         HtmlElement.prototype.val = function (val) {
             if (val === void 0) { val = null; }
             if (val) {
-                this.element.val(val);
+                this.$.val(val);
                 return this;
             }
             else {
-                return this.element.val();
+                return this.$.val();
             }
         };
         /**
@@ -358,11 +387,11 @@ var Html;
         HtmlElement.prototype.text = function (text) {
             if (text === void 0) { text = null; }
             if (text) {
-                this.element.text(text);
+                this.$.text(text);
                 return this;
             }
             else {
-                return this.element.text();
+                return this.$.text();
             }
         };
         return HtmlElement;
@@ -588,7 +617,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.success = function () {
-            this.element.addClass("btn btn-success");
+            this.$.addClass("btn btn-success");
             return this;
         };
         /**
@@ -596,7 +625,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.notice = function () {
-            this.element.addClass("btn btn-notice");
+            this.$.addClass("btn btn-notice");
             return this;
         };
         /**
@@ -604,7 +633,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.warning = function () {
-            this.element.addClass("btn btn-warning");
+            this.$.addClass("btn btn-warning");
             return this;
         };
         /**
@@ -612,7 +641,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.danger = function () {
-            this.element.addClass("btn btn-danger");
+            this.$.addClass("btn btn-danger");
             return this;
         };
         return Button;
@@ -1410,20 +1439,6 @@ var Html;
             }
             return this;
         };
-        Select.prototype.buildKeyValue = function (content) {
-            this.getElement().empty();
-            for (var key in content) {
-                var option = new Html.Option();
-                option.attr({
-                    "value": key,
-                });
-                option.getElement().text(content[key]);
-                this.append([
-                    option.getElement()
-                ]);
-            }
-            return this;
-        };
         Select.prototype.selectOption = function (value) {
             this.getElement().children().each(function () {
                 if ($(this).val() === value) {
@@ -1538,14 +1553,14 @@ var Html;
         __extends(Table, _super);
         function Table() {
             _super.apply(this, arguments);
-            this.setHeader = false;
+            this.header = false;
         }
         /**
          *
          *
          */
-        Table.prototype.buildHeader = function (columns) {
-            this.setHeader = true;
+        Table.prototype.setHeader = function (columns) {
+            this.header = true;
             this.thead = new Html.Thead("thead" + this.id);
             this.tr = new Html.Tr("tr" + this.id);
             var i = 0;
@@ -1590,9 +1605,42 @@ var Html;
                     var trIdentify2 = html.sanitizeString(key) + html.sanitizeString(row) + this.id;
                     var td = new Html.Td("TbodyTd" + trIdentify2);
                     if (this.validateSystemKeys(row)) {
-                        console.log("key:", key, "row", row);
+                        var contentRow = content[key][row];
+                        var finalContent;
+                        if (contentRow instanceof Html.HtmlElement) {
+                            finalContent = contentRow.$;
+                        }
+                        else if (contentRow instanceof jQuery) {
+                            finalContent = contentRow;
+                        }
+                        else if (typeof contentRow == "object") {
+                            if (contentRow.hasOwnProperty("content")) {
+                                finalContent = contentRow.content;
+                            }
+                            if (contentRow.hasOwnProperty("class")) {
+                                td.attr(contentRow.class);
+                            }
+                            if (contentRow.hasOwnProperty("attr")) {
+                                td.attr(contentRow.attr);
+                            }
+                            if (contentRow.hasOwnProperty("css")) {
+                                td.attr(contentRow.css);
+                            }
+                            if (contentRow.hasOwnProperty("addTd")) {
+                                tr.append([
+                                    contentRow.addTd
+                                ]);
+                            }
+                            if (contentRow.hasOwnProperty("event")) {
+                                var functionTd = contentRow.event;
+                                functionTd(td);
+                            }
+                        }
+                        else {
+                            finalContent = contentRow;
+                        }
                         td.append([
-                            content[key][row]
+                            finalContent
                         ]);
                         tr.append([
                             td.getElement()
@@ -1600,7 +1648,7 @@ var Html;
                     }
                     if (typeof this.fnCContent === "function") {
                         this.fnCContent(td, j, content[key][row], row);
-                        if (this.setHeader === false) {
+                        if (this.header === false) {
                             this.fnCHeader = this.fnCContent;
                         }
                     }
@@ -1611,8 +1659,8 @@ var Html;
                 ]);
                 i++;
             }
-            if (this.setHeader === false) {
-                this.buildHeader(header);
+            if (this.header === false) {
+                this.setHeader(header);
             }
             this.append([
                 this.tbody.getElement()
@@ -1852,7 +1900,7 @@ var Html;
                 if (typeof config.customize !== "undefined") {
                     config.customize(li, i, config.content[i]);
                 }
-                this.element.append(li.getElement());
+                this.$.append(li.getElement());
             }
             return this;
         };
@@ -2087,7 +2135,7 @@ var Bootstrap;
          * @param  {[type]} title [description]
          * @return {[type]}       [description]
          */
-        Modal.prototype.modalHeader = function (title) {
+        Modal.prototype.setHeader = function (title) {
             this.header.append([
                 title
             ]);
@@ -2098,29 +2146,35 @@ var Bootstrap;
          * @param  {[type]} content [description]
          * @return {[type]}         [description]
          */
-        Modal.prototype.modalBody = function (content) {
+        Modal.prototype.setBody = function (content) {
             this.body.append([
                 content
             ]);
-            return this.body;
+            return this;
         };
         /**
          *
          * @param  {[type]} content [description]
          * @return {[type]}         [description]
          */
-        Modal.prototype.modalFoot = function (content) {
+        Modal.prototype.setFooter = function (content) {
             if (content === void 0) { content = ""; }
             this.foot.append([
                 content
             ]);
-            return this.foot;
+            return this;
         };
+        /**
+         *
+         */
         Modal.prototype.launch = function () {
             this.container.getElement()
                 .modal('show');
             return this;
         };
+        /**
+         *
+         */
         Modal.prototype.build = function () {
             this.content.append([
                 this.header.getElement(),
@@ -2133,6 +2187,12 @@ var Bootstrap;
             this.container.append([
                 this.dialog.getElement()
             ]);
+            return this.container.getElement();
+        };
+        /**
+         *
+         */
+        Modal.prototype.getElement = function () {
             return this.container.getElement();
         };
         return Modal;

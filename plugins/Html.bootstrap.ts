@@ -8,7 +8,8 @@ namespace Bootstrap
      * [Tabs description]
      * @type {[type]}
      */
-    export class Tabs {
+    export class Tabs
+    {
 
         /**
          *
@@ -24,7 +25,8 @@ namespace Bootstrap
          * 
          * @return 
          */
-        public constructor() {
+        public constructor()
+        {
             this.random = new Html.HtmlElement().getRandom(1, 100);
             return this;
         }
@@ -240,7 +242,7 @@ namespace Bootstrap
          * @param  {[type]} title [description]
          * @return {[type]}       [description]
          */
-        public modalHeader(title: string) {
+        public setHeader(title: any) {
             this.header.append([
                 title
             ]);
@@ -252,11 +254,11 @@ namespace Bootstrap
          * @param  {[type]} content [description]
          * @return {[type]}         [description]
          */
-        public modalBody(content: string) {
+        public setBody(content: any) {
             this.body.append([
                 content
             ]);
-            return this.body;
+            return this;
         }
 
         /**
@@ -264,13 +266,16 @@ namespace Bootstrap
          * @param  {[type]} content [description]
          * @return {[type]}         [description]
          */
-        public modalFoot(content: any = "") {
+        public setFooter(content: any = "") {
             this.foot.append([
                 content
             ]);
-            return this.foot;
+            return this;
         }
 
+        /**
+         *
+         */
         public launch()
         {
             this.container.getElement()
@@ -278,7 +283,11 @@ namespace Bootstrap
             return this;
         }
 
+        /**
+         *
+         */
         public build() {
+
             this.content.append([
                 this.header.getElement(),
                 this.body.getElement(),
@@ -293,6 +302,14 @@ namespace Bootstrap
                 this.dialog.getElement()
             ]);
 
+            return this.container.getElement();
+        }
+
+        /**
+         *
+         */
+        public getElement()
+        {
             return this.container.getElement();
         }
     }
