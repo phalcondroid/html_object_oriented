@@ -1,6 +1,6 @@
 # Object oriented HTML
 
-**TODO: Add description**
+**This library allows you to create objects such as oop but in html **
 
 ## Installation
 
@@ -8,10 +8,10 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   1. Add `esocorro` to your list of dependencies in `mix.exs`:
 
-    ```elixir
-    def deps do
-      [{:esocorro, github: "phalcondroid/esocorro"}]
-    end
+    ```html
+    <script type="text/javascript" src="./js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/bootstrap.min.js"></script>// not mandaroty
+	<script type="text/javascript" src="../output/html_object.js"></script>
     ```
 
   2. Ensure `esocorro` is started before your application:
