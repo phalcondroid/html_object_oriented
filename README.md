@@ -157,7 +157,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 
   Always take the last key values to set headers
 
-  #### Custom table elements
+  ** Custom table elements
 
   ```javascript
 
@@ -262,5 +262,5 @@ How create a modal, you must get bootstrap library
 	);
 
 	modal.launch();
-```
+``
 the output is the modal in the screen, also there support to tabs, others comming soon
