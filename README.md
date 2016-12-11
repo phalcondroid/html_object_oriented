@@ -15,84 +15,56 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 	<script type="text/javascript" src="../output/html_object.js"></script>
     ```
 
-  2. How create any tag like object from javascript
+  2. How create any tag as javascript object from ooh.js
 
     ```javascript
+    var div = new Html.Div("name");
+	div.append("text sample");
+
+    $("body").log(div.$);
+    ```
+
+    ```html
+    this is the same as
+    <div id="name">text sample</div>
+    ```
+
+  3. Some methods to modify this element similar to jquery
+
+	```javascript
+    var div = new Html.Div("name");
     
-    var div = new Html.HtmlElement();
-    console.log(div);
+    div.attr("style", "background-color : white");
+    div.class("custom-class");
+    div.css("color", "black");
+
+    var pre = new Html.Pre();
+    pre.append([
+    	"other way",
+    	new Html.Br(),
+    	"to append elements"
+    ]);
+
+	div.append(
+		pre
+	);
+
+	//getElement method is to get jQuery object element $("")
+    $("body").log(div.getElement());
 
     ```
 
-  3. Set config variables, it is mandatory
+    The output is:
 
-    ## dev.exs
-
-    **Development enviroment**
-
-    ```elixir
-
-    config :mongodb,
-        hostname: "localhost",
-        username: "test",
-        password: "***",
-        database: "test"
-
-    config :slack_webhook,
-        :url, "http://slack.webhook.url.com/test"
-
-    config :error_module,
-        errors_url: "https://localhost/wwd-backend/admin/errors/index?errorId=",
-        private_key: "your-key"
+    ```html
+    <div id="name" style="background-color : white" class="custom-class" color="black">
+    	<pre>
+    		other way
+    		<br>
+    		to append elements
+    	</pre>
+    </div>
     ```
+## Cool way to table creation
 
-    ## prod.exs
-
-    **Production enviroment, this keys BRAINZ_* should be set as a enviroment variable in your SO**
-
-    ```elixir
-
-    config :mongodb,
-        hostname: System.get_env("BRAINZ_MONGO_HOSTNAME"),
-        username: System.get_env("BRAINZ_MONGO_USERNAME"),
-        password: System.get_env("BRAINZ_MONGO_PASSWORD"),
-        database: System.get_env("BRAINZ_MONGO_DATABASE")
-
-    config :slack_webhook,
-        :url, System.get_env("BRAINZ_SLACK_WEBHOOK")
-
-    config :error_module,
-        errors_url: System.get_env("BRAINZ_ERRORS_URL"),
-        private_key: System.get_env("BRAINZ_ERRORS_PRIVATE_KEY")
-    ```
-
-  3. Add socorro alias in your module
-
-    ```elixir
-    alias Socorro.Core.Exception
-    ```
-
-  4. Set in your start application file
-
-    ```
-    Socorro.config(
-        Application.fetch_env!(:eerrors, :errors_url),
-        Application.fetch_env!(:eerrors, :private_key)
-    )
-    ``
-
-  5. Report your exception in your project
-
-    ```elixir
-    try do
-      :dodod + 1
-    rescue 
-        e -> Exception.set_exception(e)
-    catch 
-        e -> Exception.set_exception(e)
-    end
-    ```
-
-    this get raise exception "bad argument in arithmetic expression"
-
-
+  Some methods to modify this element similar to jquery

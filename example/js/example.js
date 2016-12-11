@@ -2,6 +2,30 @@ $(function () {
 	
 	var body = $("#body");
 
+	var div = new Html.Div("name");
+    
+    div.attr("style", "background-color : white");
+    div.class("custom-class");
+    div.css("color", "black");
+
+    var pre = new Html.Pre();
+    pre.append([
+    	"other way",
+    	new Html.Br(),
+    	"to append elements"
+    ]);
+
+	div.append(
+		pre
+	);
+
+	body.append(
+		div.getElement()
+	);
+
+	/*
+	console.log(div2.html());
+
 	//table creation
 	var table = new Html.Table();
 	table.class("table table-striped");
@@ -58,5 +82,6 @@ $(function () {
 	);
 
 	modal.launch();
+	*/
 
 });

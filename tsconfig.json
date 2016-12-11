@@ -5,7 +5,7 @@
         "module": "system",
         "sourceMap": false,
         "inlineSources": false,
-        "outFile": "output/html_object.js"
+        "outFile": "output/ooh.js"
     },
     "filesGlob": [
         "./*.ts",

@@ -4,6 +4,46 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 /// <reference path="./definitions/jquery.d.ts"/>
+/*********************************************************
+  This a javascript library written in typescript language
+  https://github.com/phalcondroid/html_object_oriented
+  --------------------------------------------------------
+  Author: Julián Molina
+  
+  <julian@phalconphp.com>
+  <julian.molina@garlicsoft.com>
+  <phalcondroid@gmail.com>
+    
+    Distributed under the BSD license:
+    Copyright 2016 (c) Julián Molina
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions
+    are met:
+
+        * Redistributions of source code must retain the above
+          copyright notice, this list of conditions and the following
+          disclaimer.
+
+        * Redistributions in binary form must reproduce the above
+          copyright notice, this list of conditions and the following
+          disclaimer in the documentation and/or other materials
+          provided with the distribution.
+
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER “AS IS” AND ANY
+    EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+    IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+    PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE
+    LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY,
+    OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+    PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+    THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
+    TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF
+    THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
+    SUCH DAMAGE.
+
+    This paragraph was taken and modify from UglifyJS2, thanks
+***********************************************************************/
 if ("undefined" == typeof jQuery)
     throw new Error("Bootstrap's JavaScript requires jQuery");
 /**
@@ -36,10 +76,10 @@ var Html;
             this.url = "";
             this.id = name;
             if (newClone) {
-                this.$ = $(newClone);
+                this.element = $(newClone);
             }
             else {
-                this.$ = this.init(this.getClassName(), name);
+                this.element = this.init(this.getClassName(), name);
             }
             return this;
         }
@@ -47,7 +87,7 @@ var Html;
          *
          */
         HtmlElement.prototype.create = function (tag) {
-            this.$ = this.init(tag, this.id);
+            this.element = this.init(tag, this.id);
             return this;
         };
         /**
@@ -84,7 +124,7 @@ var Html;
          * @return {[type]}       [description]
          */
         HtmlElement.prototype.class = function (attrClass) {
-            this.$.attr("class", attrClass);
+            this.element.attr("class", attrClass);
             return this;
         };
         /**
@@ -92,7 +132,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.addChild = function (element) {
-            this.$.append(element);
+            this.element.append(element);
             return this;
         };
         /**
@@ -101,7 +141,7 @@ var Html;
          * @return {[type]}      [description]
          */
         HtmlElement.prototype.click = function (fn) {
-            $(this.$).click(fn);
+            $(this.element).click(fn);
             return this;
         };
         /**
@@ -109,7 +149,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.change = function (fn) {
-            $(this.$).change(fn);
+            $(this.element).change(fn);
             return this;
         };
         /**
@@ -117,7 +157,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keypress = function (fn) {
-            $(this.$).keypress(fn);
+            $(this.element).keypress(fn);
             return this;
         };
         /**
@@ -125,7 +165,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keydown = function (fn) {
-            $(this.$).keydown(fn);
+            $(this.element).keydown(fn);
             return this;
         };
         /**
@@ -133,7 +173,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.keyup = function (fn) {
-            $(this.$).keyup(fn);
+            $(this.element).keyup(fn);
             return this;
         };
         /**
@@ -141,7 +181,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.blur = function (fn) {
-            $(this.$).blur(fn);
+            $(this.element).blur(fn);
             return this;
         };
         /**
@@ -149,7 +189,7 @@ var Html;
          * @return {[type]} [description]
          */
         HtmlElement.prototype.focus = function (fn) {
-            $(this.$).focus(fn);
+            $(this.element).focus(fn);
             return this;
         };
         /**
@@ -161,31 +201,38 @@ var Html;
         HtmlElement.prototype.setEvent = function (event, fn, evenType) {
             if (evenType === void 0) { evenType = "click"; }
             // Delete created methods
-            $(this.$).unbind(event);
+            $(this.element).unbind(event);
             switch (event) {
                 case "click":
-                    $(this.$).click(fn);
+                    $(this.element).click(fn);
                     break;
                 case "change":
-                    $(this.$).change(fn);
+                    $(this.element).change(fn);
                     break;
                 case "keypress":
-                    $(this.$).keypress(fn);
+                    $(this.element).keypress(fn);
                     break;
                 case "keydown":
-                    $(this.$).keydown(fn);
+                    $(this.element).keydown(fn);
                     break;
                 case "keyup":
-                    $(this.$).keyup(fn);
+                    $(this.element).keyup(fn);
                     break;
                 case "blur":
-                    $(this.$).blur(fn);
+                    $(this.element).blur(fn);
                     break;
                 case "focus":
-                    $(this.$).focus(fn);
+                    $(this.element).focus(fn);
                     break;
             }
             return this;
+        };
+        /**
+         * [get description]
+         * @return {[type]} [description]
+         */
+        HtmlElement.prototype.getElement = function () {
+            return this.element;
         };
         HtmlElement.prototype.getJqueryElement = function (element) {
             if (element instanceof Html.HtmlElement) {
@@ -196,24 +243,22 @@ var Html;
             }
         };
         /**
-         * [get description]
-         * @return {[type]} [description]
-         */
-        HtmlElement.prototype.getElement = function () {
-            return this.$;
-        };
-        /**
          * Append elements
          * @param value append
          * @return this
          */
         HtmlElement.prototype.append = function (append) {
-            if (typeof append == "string") {
-                this.$.append(this.getJqueryElement(append));
-            }
-            else if (typeof append == "object") {
+            if (Array.isArray(append)) {
                 for (var key in append) {
-                    this.$.append(this.getJqueryElement(append[key]));
+                    this.element.append(this.getJqueryElement(append[key]));
+                }
+            }
+            else {
+                if (typeof append != "object") {
+                    this.element.append(this.getJqueryElement(append));
+                }
+                else {
+                    this.element.append(this.getJqueryElement(append));
                 }
             }
             return this;
@@ -226,15 +271,15 @@ var Html;
         HtmlElement.prototype.html = function (html) {
             if (html === void 0) { html = null; }
             if (html) {
-                this.$.html(html);
+                this.element.html(html);
                 return this;
             }
             else {
-                return this.$.html();
+                return this.element.html();
             }
         };
         HtmlElement.prototype.getHtml = function () {
-            return this.$.html();
+            return this.element.html();
         };
         /**
          *
@@ -243,13 +288,13 @@ var Html;
          */
         HtmlElement.prototype.attr = function (attr, value) {
             if (value === void 0) { value = false; }
-            if (typeof attr == "object") {
+            if (Array.isArray(attr)) {
                 for (var key in attr) {
-                    this.$.attr(key, attr[key]);
+                    this.element.attr(key, attr[key]);
                 }
             }
             else if (typeof attr == "string" && value != false) {
-                this.$.attr(attr, value);
+                this.element.attr(attr, value);
             }
             return this;
         };
@@ -257,7 +302,7 @@ var Html;
          *
          */
         HtmlElement.prototype.getAttr = function (attr) {
-            return this.$.attr(attr);
+            return this.element.attr(attr);
         };
         /**
          * [css description]
@@ -266,13 +311,13 @@ var Html;
          */
         HtmlElement.prototype.css = function (css, value) {
             if (value === void 0) { value = false; }
-            if (typeof css == "object") {
+            if (Array.isArray(css)) {
                 for (var key in css) {
-                    this.$.css(key, css[key]);
+                    this.element.css(key, css[key]);
                 }
             }
             else if (typeof css == "string" && value != false) {
-                this.$.attr(css, value);
+                this.element.attr(css, value);
             }
             return this;
         };
@@ -282,7 +327,7 @@ var Html;
          * @return {[type]}       [description]
          */
         HtmlElement.prototype.unbind = function (event) {
-            this.$.unbind(event);
+            this.element.unbind(event);
             return this;
         };
         /**
@@ -347,7 +392,7 @@ var Html;
          */
         HtmlElement.prototype.clone = function (newIdentify) {
             if (newIdentify === void 0) { newIdentify = ""; }
-            var newElement = this.$.clone();
+            var newElement = this.element.clone();
             return new HtmlElement(newIdentify, newElement[0]);
         };
         /**
@@ -372,11 +417,11 @@ var Html;
         HtmlElement.prototype.val = function (val) {
             if (val === void 0) { val = null; }
             if (val) {
-                this.$.val(val);
+                this.element.val(val);
                 return this;
             }
             else {
-                return this.$.val();
+                return this.element.val();
             }
         };
         /**
@@ -387,11 +432,11 @@ var Html;
         HtmlElement.prototype.text = function (text) {
             if (text === void 0) { text = null; }
             if (text) {
-                this.$.text(text);
+                this.element.text(text);
                 return this;
             }
             else {
-                return this.$.text();
+                return this.element.text();
             }
         };
         return HtmlElement;
@@ -617,7 +662,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.success = function () {
-            this.$.addClass("btn btn-success");
+            this.element.addClass("btn btn-success");
             return this;
         };
         /**
@@ -625,7 +670,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.notice = function () {
-            this.$.addClass("btn btn-notice");
+            this.element.addClass("btn btn-notice");
             return this;
         };
         /**
@@ -633,7 +678,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.warning = function () {
-            this.$.addClass("btn btn-warning");
+            this.element.addClass("btn btn-warning");
             return this;
         };
         /**
@@ -641,7 +686,7 @@ var Html;
          * @return {[type]} [description]
          */
         Button.prototype.danger = function () {
-            this.$.addClass("btn btn-danger");
+            this.element.addClass("btn btn-danger");
             return this;
         };
         return Button;
@@ -1608,7 +1653,7 @@ var Html;
                         var contentRow = content[key][row];
                         var finalContent;
                         if (contentRow instanceof Html.HtmlElement) {
-                            finalContent = contentRow.$;
+                            finalContent = contentRow.getElement();
                         }
                         else if (contentRow instanceof jQuery) {
                             finalContent = contentRow;
@@ -1900,7 +1945,7 @@ var Html;
                 if (typeof config.customize !== "undefined") {
                     config.customize(li, i, config.content[i]);
                 }
-                this.$.append(li.getElement());
+                this.getElement().append(li.getElement());
             }
             return this;
         };

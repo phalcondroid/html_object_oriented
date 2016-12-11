@@ -60,7 +60,7 @@ namespace Html
         /**
          * Jquery element
          */
-        public $;
+        public element;
 
         /**
          *
@@ -93,9 +93,9 @@ namespace Html
         {
             this.id = name;
             if (newClone) {
-                this.$ = $(newClone);
+                this.element = $(newClone);
             } else {
-                this.$ = this.init(this.getClassName(), name);
+                this.element = this.init(this.getClassName(), name);
             }
             return this;
         }
@@ -105,7 +105,7 @@ namespace Html
          */
         public create(tag: string)
         {
-            this.$ = this.init(tag, this.id);
+            this.element = this.init(tag, this.id);
             return this;
         }
 
@@ -148,7 +148,7 @@ namespace Html
          * @return {[type]}       [description]
          */
         public class(attrClass: string) {
-            this.$.attr("class", attrClass);
+            this.element.attr("class", attrClass);
             return this;
         }
 
@@ -157,7 +157,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public addChild(element) {
-            this.$.append(element);
+            this.element.append(element);
             return this;
         }
 
@@ -167,7 +167,7 @@ namespace Html
          * @return {[type]}      [description]
          */
         public click(fn) {
-            $(this.$).click(fn);
+            $(this.element).click(fn);
             return this;
         }
 
@@ -176,7 +176,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public change(fn) {
-            $(this.$).change(fn);
+            $(this.element).change(fn);
             return this;
         }
 
@@ -185,7 +185,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public keypress(fn) {
-            $(this.$).keypress(fn);
+            $(this.element).keypress(fn);
             return this;
         }
 
@@ -194,7 +194,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public keydown(fn) {
-            $(this.$).keydown(fn);
+            $(this.element).keydown(fn);
             return this;
         }
 
@@ -203,7 +203,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public keyup(fn) {
-            $(this.$).keyup(fn);
+            $(this.element).keyup(fn);
             return this;
         }
 
@@ -212,7 +212,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public blur(fn) {
-            $(this.$).blur(fn);
+            $(this.element).blur(fn);
             return this;
         }
 
@@ -221,7 +221,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public focus(fn) {
-            $(this.$).focus(fn);
+            $(this.element).focus(fn);
             return this;
         }
 
@@ -234,32 +234,41 @@ namespace Html
         public setEvent(event: string, fn: Function, evenType: string = "click") {
 
             // Delete created methods
-            $(this.$).unbind(event);
+            $(this.element).unbind(event);
 
             switch (event) {
                 case "click":
-                        $(this.$).click(fn);
+                        $(this.element).click(fn);
                     break;
                 case "change":
-                        $(this.$).change(fn);
+                        $(this.element).change(fn);
                     break;
                 case "keypress":
-                        $(this.$).keypress(fn);
+                        $(this.element).keypress(fn);
                     break;
                 case "keydown":
-                        $(this.$).keydown(fn);
+                        $(this.element).keydown(fn);
                     break;
                 case "keyup":
-                        $(this.$).keyup(fn);
+                        $(this.element).keyup(fn);
                     break;
                 case "blur":
-                        $(this.$).blur(fn);
+                        $(this.element).blur(fn);
                     break;
                 case "focus":
-                        $(this.$).focus(fn);
+                        $(this.element).focus(fn);
                     break;
             }
             return this;
+        }
+
+        /**
+         * [get description]
+         * @return {[type]} [description]
+         */
+        public getElement()
+        {
+            return this.element;
         }
 
         public getJqueryElement(element)
@@ -272,35 +281,31 @@ namespace Html
         }
 
         /**
-         * [get description]
-         * @return {[type]} [description]
-         */
-        public getElement() {
-            return this.$;
-        }
-
-        /**
          * Append elements
          * @param value append
          * @return this
          */
         public append(append)
         {
-            if (typeof append == "string") {
-                this.$.append(
-                    this.getJqueryElement(
-                        append
-                    )
-                );
-            } else if (typeof append == "object") {
+
+            if (Array.isArray(append)) {
                 for (let key in append) {
-                    this.$.append(
-                        this.getJqueryElement(
-                            append[key]
-                        )
+                    this.element.append(
+                        this.getJqueryElement(append[key])
+                    );
+                }
+            } else {
+                if (typeof append != "object") {
+                    this.element.append(
+                        this.getJqueryElement(append)
+                    );
+                } else {
+                    this.element.append(
+                        this.getJqueryElement(append)
                     );
                 }
             }
+
             return this;
         }
 
@@ -311,16 +316,16 @@ namespace Html
          */
         public html(html: any = null) {
             if (html) {
-                this.$.html(html);
+                this.element.html(html);
                 return this;
             } else {
-                return this.$.html();
+                return this.element.html();
             }
         }
 
         public getHtml()
         {
-            return this.$.html();
+            return this.element.html();
         }
 
         /**
@@ -330,12 +335,12 @@ namespace Html
          */
         public attr(attr, value = false)
         {
-            if (typeof attr == "object") {
+            if (Array.isArray(attr)) {
                 for (let key in attr) {
-                    this.$.attr(key, attr[key]);
+                    this.element.attr(key, attr[key]);
                 }
             } else if (typeof attr == "string" && value != false) {
-                this.$.attr(attr, value);
+                this.element.attr(attr, value);
             }
             return this;
         }
@@ -345,7 +350,7 @@ namespace Html
          */
         public getAttr(attr)
         {
-            return this.$.attr(attr);
+            return this.element.attr(attr);
         }
 
         /**
@@ -354,12 +359,12 @@ namespace Html
          * @return {[type]}     [description]
          */
         public css(css, value = false) {
-            if (typeof css == "object") {
+            if (Array.isArray(css)) {
                 for (let key in css) {
-                    this.$.css(key, css[key]);
+                    this.element.css(key, css[key]);
                 }
             } else if (typeof css == "string" && value != false) {
-                this.$.attr(css, value);
+                this.element.attr(css, value);
             }
             return this;
         }
@@ -370,7 +375,7 @@ namespace Html
          * @return {[type]}       [description]
          */
         public unbind(event) {
-            this.$.unbind(event);
+            this.element.unbind(event);
             return this;
         }
 
@@ -439,7 +444,7 @@ namespace Html
          * @return {[type]} [description]
          */
         public clone(newIdentify = "") {
-            let newElement = this.$.clone();
+            let newElement = this.element.clone();
             return new HtmlElement(newIdentify, newElement[0]);
         }
 
@@ -467,10 +472,10 @@ namespace Html
         public val(val: any = null)
         {
             if (val) {
-                this.$.val(val);
+                this.element.val(val);
                 return this;
             } else {
-                return this.$.val();
+                return this.element.val();
             }
         }
 
@@ -481,10 +486,10 @@ namespace Html
          */
         public text(text: any = null) {
             if (text) {
-                this.$.text(text);
+                this.element.text(text);
                 return this;
             } else {
-                return this.$.text();
+                return this.element.text();
             }
         }
     }
@@ -655,7 +660,7 @@ namespace Html
          */
         public success()
         {
-            this.$.addClass("btn btn-success");
+            this.element.addClass("btn btn-success");
             return this;
         }
 
@@ -665,7 +670,7 @@ namespace Html
          */
         public notice()
         {
-            this.$.addClass("btn btn-notice");
+            this.element.addClass("btn btn-notice");
             return this;
         }
 
@@ -675,7 +680,7 @@ namespace Html
          */
         public warning()
         {
-            this.$.addClass("btn btn-warning");
+            this.element.addClass("btn btn-warning");
             return this;
         }
 
@@ -685,7 +690,7 @@ namespace Html
          */
         public danger()
         {
-            this.$.addClass("btn btn-danger");
+            this.element.addClass("btn btn-danger");
             return this;
         }
     }
@@ -1404,7 +1409,7 @@ namespace Html
                         var finalContent;
 
                         if (contentRow instanceof Html.HtmlElement) {
-                            finalContent = contentRow.$;
+                            finalContent = contentRow.getElement();
                         } else if(contentRow instanceof jQuery) {
                             finalContent = contentRow;
                         } else if(typeof contentRow == "object") {
@@ -1695,7 +1700,7 @@ namespace Html
                     config.customize(li, i, config.content[i]);
                 }
 
-                this.$.append(li.getElement());
+                this.getElement().append(li.getElement());
 
             }
             return this;
