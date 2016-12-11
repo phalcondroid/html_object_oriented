@@ -153,13 +153,13 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 			</tr>
 		</tbody>
 	</table>
-  ``
+  ```
 
   Always take the last key values to set headers
 
   #### Custom table elements
 
-  ´´´javascript
+  ```javascript
 
 	var table = new Html.Table();
 	
@@ -194,7 +194,7 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 		}
 	]);
 
-  ´´´
+  ```
 
   html output
 
@@ -262,5 +262,5 @@ How create a modal, you must get bootstrap library
 	);
 
 	modal.launch();
-``
+```
 the output is the modal in the screen, also there support to tabs, others comming soon
