@@ -5,7 +5,7 @@
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
+visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for more information
 
   1. Download from output folder:
 
@@ -262,5 +262,5 @@ How create a modal, you must get bootstrap library
 	);
 
 	modal.launch();
-```
+``
 the output is the modal in the screen, also there support to tabs, others comming soon
