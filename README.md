@@ -1,12 +1,13 @@
 # Object oriented HTML
 
 **This library allows you to create objects such as oop but in html **
+**This library is writted in typescript**
 
 ## Installation
 
 If [available in Hex](https://hex.pm/docs/publish), the package can be installed as:
 
-  1. Add `esocorro` to your list of dependencies in `mix.exs`:
+  2. Download from output folder:
 
     ```html
     <script type="text/javascript" src="./js/jquery.min.js"></script>
@@ -14,12 +15,13 @@ If [available in Hex](https://hex.pm/docs/publish), the package can be installed
 	<script type="text/javascript" src="../output/html_object.js"></script>
     ```
 
-  2. Ensure `esocorro` is started before your application:
+  2. How create any tag like object from javascript
 
-    ```elixir
-    def application do
-      [applications: [:esocorro]]
-    end
+    ```javascript
+    
+    var div = new Html.HtmlElement();
+    console.log(div);
+
     ```
 
   3. Set config variables, it is mandatory
