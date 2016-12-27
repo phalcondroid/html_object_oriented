@@ -21,7 +21,7 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
     var div = new Html.Div("name");
 	div.append("text sample");
 
-    $("body").log(div.$);
+    $("body").html(div.getElement());
     ```
 
     ```html
@@ -157,7 +157,7 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 
   Always take the last key values to set headers
 
-  ** Custom table elements
+  ##Custom table elements
 
   ```javascript
 
