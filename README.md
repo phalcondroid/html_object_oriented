@@ -1,21 +1,21 @@
 # Object Oriented HTML
 
-**This library allows you to create objects such as oop but in html **
-**This library is writted in typescript**
+** This library allows you to create objects such as oop but in html **
+** This library is writted in typescript**
 
 ## Installation
 
 visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for more information
 
-  1. Download from output folder:
+1. Download from output folder:
 
-    ```html
+```html
     <script type="text/javascript" src="./js/jquery.min.js"></script>
 	<script type="text/javascript" src="./js/bootstrap.min.js"></script>// not mandaroty
 	<script type="text/javascript" src="../output/html_object.js"></script>
-    ```
+```
 
-  2. How create any tag as javascript object from ooh.js
+2. How create any tag as javascript object from ooh.js
 
     ```javascript
     var div = new Html.Div("name");
@@ -29,9 +29,9 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
     <div id="name">text sample</div>
     ```
 
-  3. Some methods to modify this element similar to jquery
+3. Some methods to modify this element similar to jquery
 
-	```javascript
+```javascript
     var div = new Html.Div("name");
     
     div.attr("style", "background-color : white");
@@ -52,11 +52,11 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 	//getElement method is to get jQuery object element $("")
     $("body").log(div.getElement());
 
-    ```
+```
 
-    The output is:
+The output is:
 
-    ```html
+```html
     <div id="name" style="background-color : white" class="custom-class" color="black">
     	<pre>
     		other way
@@ -64,13 +64,13 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
     		to append elements
     	</pre>
     </div>
-    ```
+```
 
 ## Tables
 
   Some methods to modify this element similar to jquery
 
-  ```javascript
+```javascript
 
 	var table = new Html.Table();
 	
@@ -98,11 +98,11 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 		table.getElement()
 	);
 
-  ```
+```
 
-  This code produce this html table
+This code produce this html table
 
-  ```html
+```html
 	<table class="table">
 		<thead id="thead">
 			<tr id="tr">
@@ -153,13 +153,13 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 			</tr>
 		</tbody>
 	</table>
-  ```
+```
 
-  Always take the last key values to set headers
+Always take the last key values to set headers
 
-  ##Custom table elements
+## Custom table elements
 
-  ```javascript
+```javascript
 
 	var table = new Html.Table();
 	
@@ -194,11 +194,11 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 		}
 	]);
 
-  ```
+```
 
-  html output
+html output
 
-  ```html
+```html
 	<table class="table">
 		<thead id="thead">
 		  	<tr id="trHeader">
@@ -237,7 +237,7 @@ visit our web page [www.garlicsoft.com/ooh](https://garlicsoft.com/ooh), for mor
 
 # Bootstrap helper
 
-##Modals
+## Modals
 
 How create a modal, you must get bootstrap library
 
